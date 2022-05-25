@@ -23,14 +23,16 @@ VALUES
 ("Prisioneiro", 4, 200, 200, 100, 1000),
 ("Ladro", 5, 200, 500, 300, 2100);
 
+
+
 CREATE TABLE tb_personagens(
-id bigint AUTO_INCREMENT,
+personagens_id bigint AUTO_INCREMENT,
 nickname varchar(255) NOT NULL,
 raca varchar(255),
 item_especial varchar(255),
 
-PRIMARY KEY (id),
-FOREIGN KEY (classes_id) REFERENCES tb_personagens(id)
+PRIMARY KEY (personagens_id),
+FOREIGN KEY (personagens_id) REFERENCES tb_classes(id)
 );
 
 INSERT INTO tb_personagens (nickname, raca, item_especial)
@@ -42,4 +44,38 @@ VALUES
 ("G Meneghetti", "Khajiit", "Manto da Invisibilidade")
 ;
 
+SELECT * FROM tb_personagens INNER JOIN tb_classes
+ON  personagens_id = tb_classes.id
+WHERE nickname LIKE "%c%";
 
+SELECT * FROM tb_personagens INNER JOIN tb_classes
+ON  personagens_id = tb_classes.id
+WHERE poder > 1000 and poder < 2000;
+
+SELECT * FROM tb_personagens INNER JOIN tb_classes
+ON  personagens_id = tb_classes.id
+WHERE poder > 2000;
+
+SELECT * FROM tb_personagens INNER JOIN tb_classes
+ON  personagens_id = tb_classes.id
+WHERE classe = "Ladro";
+
+SELECT * FROM tb_personagens INNER JOIN tb_classes
+ON nickname LIKE "%c%";
+
+SELECT * FROM tb_personagens RIGHT JOIN tb_classes
+ON tb_personagens.personagens_id = tb_classes.id;
+
+SELECT * FROM tb_personagens LEFT JOIN tb_classes
+ON tb_personagens.personagens_id = tb_classes.id;
+
+UPDATE tb_personagens
+SET raca = "Humano"
+WHERE personagens_id = 2;
+
+UPDATE tb_classes
+SET poder = 1100
+WHERE id = 4;
+
+ALTER TABLE tb_classes
+MODIFY poder bigint;
